@@ -18,27 +18,28 @@ function Registerform() {
         }
         const PostData = async () => {
             try {
-            const url = "/api/auth/Register";
-            const response = await axios.post(url, payload)
-            const responsepayload = response.data.Registereduser
-            if (responsepayload.status == 200) {
+                const url = "/api/auth/Register";
+                const response = await axios.post(url, payload)
+                const responsepayload = response.data.Registereduser
+                if (responsepayload.status == 200) {
+                    Swal.fire({
+                        title: `${responsepayload.message}`,
+                        icon: "success",
+                        confirmButtonColor: "#39619F"
+
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            route.push("/client/pages/login")
+                        }
+                    });
+                }
+            } catch (error: unknown) {
+                const message = (error instanceof Error) ? (error?.message) : ("Something Went Wrong")
                 Swal.fire({
-                    title: `${responsepayload.message}`,
-                    icon: "success",
-                    confirmButtonColor:"#39619F"
-                    
-                }).then((result)=>{
-                    if(result.isConfirmed){
-                        route.push("/client/pages/login")
-                    }
-                });
-            }
-            }catch(error:any){
-                const responsepayload = error.response.data.Registereduser
-                Swal.fire({
-                    icon:"error",
-                    title:"Registration Failed",
-                    confirmButtonColor:"#F52F07"
+                    icon: "error",
+                    title: "Registration Failed",
+                    text: `${message}`,
+                    confirmButtonColor: "#F52F07"
                 })
             }
         }

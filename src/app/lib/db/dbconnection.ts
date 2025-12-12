@@ -6,8 +6,9 @@ const DBConnection = async() => {
     try{
         await mongoose.connect(url);
         console.log("Connection Successfull.....");
-    }catch(error:any){
-        console.log(error.message)
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+        console.log("Error",message)
     }
 }
 export default DBConnection

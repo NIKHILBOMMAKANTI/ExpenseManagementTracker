@@ -6,7 +6,8 @@ export async function POST(request:Request){
         await DBConnection();
         const LoginCredentials = await ValidateLogin(request);
         return new Response(JSON.stringify({LoginCredentials}),{status:LoginCredentials?.status})
-    }catch(error:any){
-        return new Response(JSON.stringify({message:error.message}),{status:500})
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+        return new Response(JSON.stringify({message:message}),{status:500})
     }
 }

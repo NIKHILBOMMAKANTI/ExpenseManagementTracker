@@ -12,8 +12,9 @@ export async function GET(request:Request,{params}:any){
         const SpecificUserData = await getSpecificUser(request,userid);
         return new Response(JSON.stringify({SpecificUserData}),{status:SpecificUserData.status})
 
-    }catch(error:any){
-    return new Response(JSON.stringify({error:error.message}),{status:500})
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+        return new Response(JSON.stringify({error: message}),{status:500})
     }
 }
 
@@ -26,8 +27,9 @@ export async function DELETE(request:Request,{params}:any){
         }
         const deletedUser = await deleteUser(request,userid);
         return new Response(JSON.stringify({deletedUser}),{status:deletedUser.status})
-    }catch(error:any){
-        return new Response(JSON.stringify({error:error.message}),{status:500})
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+        return new Response(JSON.stringify({error:message}),{status:500})
     }
 }
 
@@ -37,7 +39,8 @@ export async function PUT(request:Request,{params}:any){
         const userid = await params.id
         const updatedUserData = await updateUser(request,userid);
         return new Response(JSON.stringify({updatedUserData}),{status:updatedUserData.status})
-    }catch(error:any){
-        return new Response(JSON.stringify({error:error.message}),{status:500})
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+        return new Response(JSON.stringify({error:message}),{status:500})
     }
 }

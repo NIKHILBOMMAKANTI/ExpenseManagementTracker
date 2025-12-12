@@ -15,8 +15,9 @@ export function ApprovalDashboardTabs({ setTableData,setisProcessing,setActiveta
             })
             setTableData(response?.data?.data)
         }
-    }catch(error:any){
-        console.log("Error",error?.message)
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+        console.log("Error",message)
     }finally{
          setActivetab('reject');
         setTimeout(()=>{
@@ -37,8 +38,9 @@ export function ApprovalDashboardTabs({ setTableData,setisProcessing,setActiveta
             })
             setTableData(response?.data?.data);
         }
-    }catch(error:any){
-        console.log("Error",error?.message);
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+        console.log("Error",message);
     }finally{
         setActivetab('pending');
         setTimeout(()=>{

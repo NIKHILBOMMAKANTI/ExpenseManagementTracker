@@ -6,7 +6,8 @@ export async function POST(request:Request,{params}:any){
         const userid = await params.id;
         const sendMailRes = await sendNotification(userid);
         return new Response(JSON.stringify(sendMailRes),{status:sendMailRes?.status})
-    }catch(error:any){
-        return new Response(JSON.stringify({error:error.message}),{status:500})
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+        return new Response(JSON.stringify({error:message}),{status:500})
     }
 }

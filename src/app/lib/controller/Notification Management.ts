@@ -72,7 +72,8 @@ export const WeeklySummary = async () => {
 schedule('0 12 * * 1',async ()=>{
     try{
         await WeeklySummary();
-    }catch(error:any){
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
         await Transport.sendMail({
             from: 'nikhilbommakanti2001@gmail.com',
             to: 'nikhilbommakanti2001@gmail.com',
@@ -83,7 +84,7 @@ schedule('0 12 * * 1',async ()=>{
             <p>Please check the system logs and take necessary action to resolve the issue.</p></br>
 
             <p>Failed Details</p>
-            <p>Error Message:<span>${error.message}</span></p></br>
+            <p>Error Message:<span>${message}</span></p></br>
 
             <p>Regards</p>
             <p>Nikhil Bommakanti</p>

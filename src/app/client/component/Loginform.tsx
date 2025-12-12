@@ -31,12 +31,12 @@ function Loginform() {
                     }
                 })
             }
-         }catch(error:any){
-            const responsepayload = error.response.data.LoginCredentials;
+         }catch(error:unknown){
+            const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
             Swal.fire({
                 icon:"error",
                 title:"Registration Failed",
-                text:`${responsepayload.message}`,
+                text:`${message}`,
                 confirmButtonColor:"#F52F07"
             })
         }

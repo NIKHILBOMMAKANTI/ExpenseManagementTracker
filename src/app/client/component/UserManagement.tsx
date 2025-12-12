@@ -36,8 +36,9 @@ export function UserManagement() {
                 });
                 setData(response?.data?.UsersData?.data);
             }
-        }catch(error:any){
-            console.log("Error",error?.message)
+        }catch(error:unknown){
+            const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+            console.log("Error",message)
         }finally{
             setIsLoading(false);
         }

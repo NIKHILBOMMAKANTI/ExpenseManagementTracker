@@ -6,7 +6,8 @@ export async function POST(request:Request){
         await DBConnection();
         const ValidationData = await ValidatePolicy(request);
         return new Response(JSON.stringify(ValidationData),{status:ValidationData.status})
-    }catch(error:any){
-        return new Response(JSON.stringify({error:error.message}),{status:500})
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+        return new Response(JSON.stringify({error:message}),{status:500})
     }
 }

@@ -21,8 +21,9 @@ export function ExpenseManagement({ setExpid }: ExpenseManagementProp) {
                     }
                 })
                 setData(response?.data?.data);
-            }catch(error:any){
-                console.log("Error",error?.message)
+            }catch(error:unknown){
+                const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+                console.log("Error",message)
             }finally{
                 setTimeout(()=>{setIsLoading(false);},1000)
                 

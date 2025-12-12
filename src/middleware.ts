@@ -26,8 +26,9 @@ export async function middleware(req: NextRequest) {
         return NextResponse.next({
             request: { headers: UserDetails }
         });
-    } catch (error: any) {
-        return new Response(JSON.stringify({ error: error.message }))
+    } catch (error: unknown) {
+        const message = (error instanceof Error)?(error?.message):("Something went wrong")
+        return new Response(JSON.stringify({ error: message }))
     }
 
 }
