@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useState, useRef,useEffect } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { Stack, Box, Table, Text, Button, Dialog, Card, Field, Input, Portal, Skeleton } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa6";
 import { PageContext } from "../context/PageProvider";
@@ -13,11 +13,19 @@ interface FormType {
     email?: HTMLInputElement | null,
     password?: HTMLInputElement | null
 }
+interface SelectedUsertype {
+    _id: string,
+    Email: string,
+    Firstname: string,
+    Lastname: string,
+    Password: string,
+    Role: string,
+    __v: number
+}
 
 
-
-export function UserTable({ data, heading, buttontxt, handleUserDelete, setUserUpdate, isLoading,GetData }: any) {
-    const [selectedUser, setSelectedUser] = useState({})
+export function UserTable({ data, heading, buttontxt, handleUserDelete, setUserUpdate, isLoading, GetData }: any) {
+    const [selectedUser, setSelectedUser] = useState<SelectedUsertype | undefined>(undefined)
     const [isOpen, setisOpen] = useState(false);
     const { page, setPage } = useContext(PageContext)!;
     const FormData = useRef<FormType>({});
@@ -25,9 +33,10 @@ export function UserTable({ data, heading, buttontxt, handleUserDelete, setUserU
     const Headers = (data?.length > 0) ? Object.keys(data[0]) : [];
     Headers.unshift("S.No");
     Headers.push("Actions");
-    console.log("Headers",Headers)
+    console.log("Headers", Headers)
 
     const handleEdit = (Data: any) => {
+        console.log("SetSelectedUserData", Data);
         setSelectedUser(Data);
         setisOpen(true);
     }
@@ -71,7 +80,7 @@ export function UserTable({ data, heading, buttontxt, handleUserDelete, setUserU
             console.log(error);
         }
     }
-console.log("UserData",data);
+    console.log("UserData", data);
     return (
         <>
             <Stack background="#EDEDED" padding="0.4rem">
@@ -89,55 +98,55 @@ console.log("UserData",data);
                     </Box>
                 </Stack>
                 {
-                    (isLoading)?(<Skeleton height="300px" width="100%" borderRadius="10px"/>):(
-                    <Box w="100%" overflowX="auto" width={{ base: "300px", sm: "100%", md: "100%" }}>
-                        {
-                            (data && data.length > 0) ? (
-                                <Table.Root variant="outline" striped minWidth="300px" flexWrap="wrap" borderRadius="10px">
-                                    <Table.Header>
-                                        <Table.Row background="#c3e0f8">
+                    (isLoading) ? (<Skeleton height="300px" width="100%" borderRadius="10px" />) : (
+                        <Box w="100%" overflowX="auto" width={{ base: "300px", sm: "100%", md: "100%" }}>
+                            {
+                                (data && data.length > 0) ? (
+                                    <Table.Root variant="outline" striped minWidth="300px" flexWrap="wrap" borderRadius="10px">
+                                        <Table.Header>
+                                            <Table.Row background="#c3e0f8">
+                                                {
+                                                    Headers.map((TableHeader, index) => {
+                                                        if (TableHeader !== '__v' && TableHeader !== '_id' && TableHeader !== 'Password') {
+                                                            return (
+                                                                <Table.ColumnHeader color="#39619D" fontWeight="700" key={index}>{TableHeader}</Table.ColumnHeader>
+                                                            )
+                                                        }
+                                                    })
+                                                }
+                                            </Table.Row>
+                                        </Table.Header>
+                                        <Table.Body>
                                             {
-                                                Headers.map((TableHeader, index) => {
-                                                    if (TableHeader !== '__v' && TableHeader !== '_id' && TableHeader !== 'Password') {
-                                                        return (
-                                                            <Table.ColumnHeader color="#39619D" fontWeight="700" key={index}>{TableHeader}</Table.ColumnHeader>
-                                                        )
-                                                    }
+                                                data?.map((Data: any, index: number) => {
+                                                    return (
+                                                        <Table.Row key={index} color="#39619D" style={{ background: index % 2 == 0 ? '#E4F3FF' : '#ffffff' }} >
+                                                            <Table.Cell>{index + 1}</Table.Cell>
+                                                            <Table.Cell>{Data.Firstname}</Table.Cell>
+                                                            <Table.Cell>{Data.Lastname}</Table.Cell>
+                                                            <Table.Cell>{Data.Email}</Table.Cell>
+                                                            <Table.Cell>{Data.Role}</Table.Cell>
+                                                            <Table.Cell>
+                                                                <Stack direction={{ base: "column", md: "row" }}>
+                                                                    <Button background="#FCC02E" variant="solid" borderRadius="20px" data-userid={Data._id} onClick={() => { handleEdit(Data) }} paddingTop="0.5rem" paddingBottom="0.5rem" paddingLeft="1.25rem" paddingRight="1.25rem">
+                                                                        Edit
+                                                                    </Button>
+                                                                    <Button background="#F6110E" variant="solid" borderRadius="20px" data-userid={Data._id} onClick={(e) => { handleUserDelete(e) }} paddingTop="0.5rem" paddingBottom="0.5rem" paddingLeft="1.25rem" paddingRight="1.25rem">
+                                                                        Delete
+                                                                    </Button>
+                                                                </Stack>
+                                                            </Table.Cell>
+                                                        </Table.Row>
+                                                    );
                                                 })
                                             }
-                                        </Table.Row>
-                                    </Table.Header>
-                                    <Table.Body>
-                                        {
-                                            data?.map((Data: any, index: number) => {
-                                                return (
-                                                    <Table.Row key={index} color="#39619D" style={{ background: index % 2 == 0 ? '#E4F3FF' : '#ffffff' }} >
-                                                        <Table.Cell>{index + 1}</Table.Cell>
-                                                        <Table.Cell>{Data.Firstname}</Table.Cell>
-                                                        <Table.Cell>{Data.Lastname}</Table.Cell>
-                                                        <Table.Cell>{Data.Email}</Table.Cell>
-                                                        <Table.Cell>{Data.Role}</Table.Cell>
-                                                        <Table.Cell>
-                                                            <Stack direction={{ base: "column", md: "row" }}>
-                                                                <Button background="#FCC02E" variant="solid" borderRadius="20px" data-userid={Data._id} onClick={() => { handleEdit(Data) }} paddingTop="0.5rem" paddingBottom="0.5rem" paddingLeft="1.25rem" paddingRight="1.25rem">
-                                                                    Edit
-                                                                </Button>
-                                                                <Button background="#F6110E" variant="solid" borderRadius="20px" data-userid={Data._id} onClick={(e) => { handleUserDelete(e) }} paddingTop="0.5rem" paddingBottom="0.5rem" paddingLeft="1.25rem" paddingRight="1.25rem">
-                                                                    Delete
-                                                                </Button>
-                                                            </Stack>
-                                                        </Table.Cell>
-                                                    </Table.Row>
-                                                );
-                                            })
-                                        }
-                                    </Table.Body>
-                                </Table.Root>) : (
-                                <Text textAlign="center" color="gray.500" fontSize="lg" py="4">
-                                    Nothing to show here yet!!
-                                </Text>
-                            )}
-                    </Box>)
+                                        </Table.Body>
+                                    </Table.Root>) : (
+                                    <Text textAlign="center" color="gray.500" fontSize="lg" py="4">
+                                        Nothing to show here yet!!
+                                    </Text>
+                                )}
+                        </Box>)
                 }
             </Stack>
 

@@ -1,4 +1,4 @@
-import { Stack, Box, Table, Text, Button, Field, Dialog, Portal, Card, Input, Textarea, NativeSelect,Skeleton } from "@chakra-ui/react";
+import { Stack, Box, Table, Text, Button, Field, Dialog, Portal, Card, Input, Textarea, NativeSelect, Skeleton } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa6";
 import { PageContext } from "../context/PageProvider";
 import { useContext, useState, useRef } from "react";
@@ -19,14 +19,14 @@ interface PolicyDataProp {
     name: string | null,
     description: string | null,
     limitAmount: number | null,
-    effectiveDate: Date | null,
-    expiryDate: Date | null,
+    effectiveDate: string | null,
+    expiryDate: string | null,
     category: string | null,
 }
-export function PolicyTable({ data, heading, buttontxt, handlePolicyDelete,isLoading,GetData }: any) {
+export function PolicyTable({ data, heading, buttontxt, handlePolicyDelete, isLoading, GetData }: any) {
     const [isOpen, setisOpen] = useState(false);
     const [policydata, setPolicyData] = useState<PolicyDataProp>();
-    const FormData = useRef<FormDataProp>({});
+    const FormData = useRef<Partial<FormDataProp>>({});
     const Headers = (data?.length > 0) ? Object.keys(data[0]) : [];
     Headers.unshift("S.No")
     Headers.push("Actions");
@@ -65,6 +65,7 @@ export function PolicyTable({ data, heading, buttontxt, handlePolicyDelete,isLoa
     const handlePolicyUpdate = async (e: any) => {
         try {
             const policyid = policydata?._id
+            if (!FormData.current) return;
             const updatepayload = {
                 name: FormData.current.name?.value,
                 description: FormData.current.description?.value,
@@ -100,7 +101,7 @@ export function PolicyTable({ data, heading, buttontxt, handlePolicyDelete,isLoa
             console.log("Error", error);
         }
     }
-
+    console.log("Policydata", policydata);
     return (
         <>
             <Stack background="#EDEDED" padding="0.4rem">
@@ -118,60 +119,60 @@ export function PolicyTable({ data, heading, buttontxt, handlePolicyDelete,isLoa
                     </Box>
                 </Stack>
                 {
-                (isLoading)?(<Skeleton height="300px" width="100%" borderRadius="10px"/>):(
-                <Box w="100%" overflowX="auto" width={{ base: "300px", sm: "100%", md: "100%" }}>
-                {
-                    (data && data.length > 0)?(
-                    <Table.Root variant="outline" striped minWidth="300px" flexWrap="wrap" borderRadius="10px">
-                        <Table.Header>
-                            <Table.Row background="#c3e0f8">
-                                {
-                                    Headers.map((TableHeader, index) => {
-                                        if (TableHeader !== 'id' && TableHeader !== 'Description' && TableHeader !== 'Currency') {
-                                            return (
-                                                <Table.ColumnHeader color="#39619D" fontWeight="700" key={index}>{TableHeader}</Table.ColumnHeader>
-                                            )
-                                        }
-
-                                    })
-                                }
-                            </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
+                    (isLoading) ? (<Skeleton height="300px" width="100%" borderRadius="10px" />) : (
+                        <Box w="100%" overflowX="auto" width={{ base: "300px", sm: "100%", md: "100%" }}>
                             {
-                                data?.map((Data: any, index: number) => {
-                                    return (
-                                        <Table.Row key={index} color="#39619D" style={{ background: index % 2 == 0 ? '#E4F3FF' : '#ffffff' }} >
-                                            <Table.Cell>{index + 1}</Table.Cell>
-                                            <Table.Cell>{Data["Policy Name"]}</Table.Cell>
-                                            <Table.Cell>{Data.Category}</Table.Cell>
-                                            <Table.Cell>{Data["Limit Amount"]}</Table.Cell>
-                                            <Table.Cell>{Data["Effective Date"]}</Table.Cell>
-                                            <Table.Cell>{Data["Expiry Date"]}</Table.Cell>
-                                            <Table.Cell>{Data["Created Date"]}</Table.Cell>
-                                            <Table.Cell>
-                                                <Stack direction={{ base: "column", md: "row" }}>
-                                                    <Button background="#FCC02E" variant="solid" borderRadius="20px" data-policyid={Data.id} paddingTop="0.5rem" paddingBottom="0.5rem" paddingLeft="1.25rem" paddingRight="1.25rem" onClick={(e) => { handlePolicy(e) }}>
-                                                        Edit
-                                                    </Button>
-                                                    <Button background="#F6110E" variant="solid" borderRadius="20px" data-policyid={Data.id} onClick={(e) => { handlePolicyDelete(e) }} paddingTop="0.5rem" paddingBottom="0.5rem" paddingLeft="1.25rem" paddingRight="1.25rem">
-                                                        Delete
-                                                    </Button>
-                                                </Stack>
-                                            </Table.Cell>
-                                        </Table.Row>
-                                    )
-                                })
+                                (data && data.length > 0) ? (
+                                    <Table.Root variant="outline" striped minWidth="300px" flexWrap="wrap" borderRadius="10px">
+                                        <Table.Header>
+                                            <Table.Row background="#c3e0f8">
+                                                {
+                                                    Headers.map((TableHeader, index) => {
+                                                        if (TableHeader !== 'id' && TableHeader !== 'Description' && TableHeader !== 'Currency') {
+                                                            return (
+                                                                <Table.ColumnHeader color="#39619D" fontWeight="700" key={index}>{TableHeader}</Table.ColumnHeader>
+                                                            )
+                                                        }
+
+                                                    })
+                                                }
+                                            </Table.Row>
+                                        </Table.Header>
+                                        <Table.Body>
+                                            {
+                                                data?.map((Data: any, index: number) => {
+                                                    return (
+                                                        <Table.Row key={index} color="#39619D" style={{ background: index % 2 == 0 ? '#E4F3FF' : '#ffffff' }} >
+                                                            <Table.Cell>{index + 1}</Table.Cell>
+                                                            <Table.Cell>{Data["Policy Name"]}</Table.Cell>
+                                                            <Table.Cell>{Data.Category}</Table.Cell>
+                                                            <Table.Cell>{Data["Limit Amount"]}</Table.Cell>
+                                                            <Table.Cell>{Data["Effective Date"]}</Table.Cell>
+                                                            <Table.Cell>{Data["Expiry Date"]}</Table.Cell>
+                                                            <Table.Cell>{Data["Created Date"]}</Table.Cell>
+                                                            <Table.Cell>
+                                                                <Stack direction={{ base: "column", md: "row" }}>
+                                                                    <Button background="#FCC02E" variant="solid" borderRadius="20px" data-policyid={Data.id} paddingTop="0.5rem" paddingBottom="0.5rem" paddingLeft="1.25rem" paddingRight="1.25rem" onClick={(e) => { handlePolicy(e) }}>
+                                                                        Edit
+                                                                    </Button>
+                                                                    <Button background="#F6110E" variant="solid" borderRadius="20px" data-policyid={Data.id} onClick={(e) => { handlePolicyDelete(e) }} paddingTop="0.5rem" paddingBottom="0.5rem" paddingLeft="1.25rem" paddingRight="1.25rem">
+                                                                        Delete
+                                                                    </Button>
+                                                                </Stack>
+                                                            </Table.Cell>
+                                                        </Table.Row>
+                                                    )
+                                                })
+                                            }
+                                        </Table.Body>
+                                    </Table.Root>) : (
+                                    <Text textAlign="center" color="gray.500" fontSize="lg" py="4">
+                                        Nothing to show here yet!!
+                                    </Text>
+                                )
                             }
-                        </Table.Body>
-                    </Table.Root>):(
-                    <Text textAlign="center" color="gray.500" fontSize="lg" py="4">
-                        Nothing to show here yet!!
-                    </Text>
-                    )
+                        </Box>)
                 }
-                </Box>)
-}
             </Stack>
 
             <Dialog.Root key="center" placement="center" motionPreset="slide-in-bottom" open={isOpen} >
@@ -213,11 +214,11 @@ export function PolicyTable({ data, heading, buttontxt, handlePolicyDelete,isLoa
                                         <Stack gap="4" width="full" flexDirection={{ base: 'column', md: 'row' }} >
                                             <Field.Root >
                                                 <Field.Label fontSize="15px">Effective Date</Field.Label>
-                                                <Input type="date" border="1px solid #86A4C3" name="effectiveDate" ref={(el) => { FormData.current.effectiveDate = el }} defaultValue={policydata?.effectiveDate} />
+                                                <Input type="date" border="1px solid #86A4C3" name="effectiveDate" ref={(el) => { FormData.current.effectiveDate = el }} defaultValue={policydata?.effectiveDate || ''} />
                                             </Field.Root>
                                             <Field.Root>
                                                 <Field.Label fontSize="15px">Expiry Date</Field.Label>
-                                                <Input type="date" border="1px solid #86A4C3" name="expiryDate" variant="outline" placeholder="Enter Effective Date" defaultValue={policydata?.expiryDate} ref={(el) => { FormData.current.expiryDate = el }} />
+                                                <Input type="date" border="1px solid #86A4C3" name="expiryDate" variant="outline" placeholder="Enter Effective Date" defaultValue={policydata?.expiryDate || ''} ref={(el) => { FormData.current.expiryDate = el }} />
                                             </Field.Root>
                                         </Stack>
                                     </Stack>
