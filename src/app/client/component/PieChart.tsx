@@ -9,6 +9,8 @@ interface ChartItem {
     name: string,
     value: number,
     color: string
+    [key: string]: string | number | undefined;
+
 }
 export default function () {
     const [StatsSummary, setStatsSummary] = useState<ChartItem[]>([]);
@@ -47,7 +49,6 @@ export default function () {
                         nameKey="name"
                         stroke="none"
                         labelLine={false}
-                        position="outside"
                         label={({name, value})=> `${name}: ${value}`}
                     >
                         {

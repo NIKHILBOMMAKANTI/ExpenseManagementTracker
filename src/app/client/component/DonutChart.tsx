@@ -22,10 +22,16 @@ interface ExpenseItem {
     "color"?: string
 
 }
+interface categoryDatatype{
+    "category": string,
+    "amount": number,
+    "color"?: string,
+    [key: string]: string | number | undefined;
+}
 
 
 export default function DonutChart() {
-    const [categoryData, setCategoryData] = useState<ExpenseItem[]>([]);
+    const [categoryData, setCategoryData] = useState<categoryDatatype[]>([]);
 
     useEffect(() => {
         const GetData = async () => {
@@ -36,7 +42,7 @@ export default function DonutChart() {
                     Authorization: `Bearer ${Token}`
                 }
             });
-            const responsepayload = response.data.data
+            const responsepayload = response.data.data;
             setCategoryData(responsepayload);
         }
         GetData();
@@ -62,7 +68,6 @@ export default function DonutChart() {
                         nameKey="category"
                         stroke="none"
                         labelLine={false}
-                        position="inside"
                         label={({category, amount})=> `${category}: ${amount}`}
                     >
                         {
