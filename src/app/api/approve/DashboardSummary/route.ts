@@ -1,13 +1,15 @@
 import DBConnection from "@/app/lib/db/dbconnection";
 import { getDashboardSummary } from "@/app/lib/controller/ApprovalManagement";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request:Request){
+
+export async function GET(request:NextRequest){
     try{
         await DBConnection();
         const DashboardSummary = await getDashboardSummary(request);
-        return new Response(JSON.stringify(DashboardSummary),{status:DashboardSummary.status})
+        return NextResponse.json(DashboardSummary,{status:DashboardSummary.status ?? 500})
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error:message}),{status:500})
+        return NextResponse.json({error:message},{status:500})
     }
 }

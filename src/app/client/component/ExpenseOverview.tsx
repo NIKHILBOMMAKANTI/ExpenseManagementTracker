@@ -67,7 +67,9 @@ export function ExpenseOverview({ heading, buttontxt, expid }: ExpenseOverviewPr
                 let Day = CreatedAt.slice(8, 10);
                 let formattedDate = `${Day}-${Month}-${Year}`;
                 let Response = response?.data?.data
+                console.log("Expense Overview",Response);
                 Response['formattedDate'] = formattedDate
+                
                 setExpdata(Response);
             } catch (error: any) {
                 console.log("Error", error.message)
@@ -122,10 +124,10 @@ export function ExpenseOverview({ heading, buttontxt, expid }: ExpenseOverviewPr
                     Authorization: `Bearer ${token}`
                 }
             })
-            let ResponseStatus = response?.data?.status
-            let ResponseData = response?.data?.data;
+            let ResponseStatus = response?.status
+            let ResponseData = JSON.parse(response?.data);
             if (ResponseStatus == 200) {
-                toast.success(`${response?.data?.message}`, {
+                toast.success(`${ResponseData?.message}`, {
                     style: {
                         border: '1px solid #E53E3E',
                         padding: '16px',

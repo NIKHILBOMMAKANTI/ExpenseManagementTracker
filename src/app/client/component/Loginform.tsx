@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation"
 function Loginform() {
     const router = useRouter();
     const handleLoginForm = ()=>{
-        
             const payload = {
             email:values?.email,
             password:values?.password
@@ -18,7 +17,7 @@ function Loginform() {
             try{
             const url = "/api/auth/Login";
             const response = await axios.post(url,payload);
-            const responsepayload = response.data.LoginCredentials;
+            const responsepayload = response.data;
             if(responsepayload?.status == 200 ){
                 Swal.fire({
                     title:`${responsepayload?.message}`,

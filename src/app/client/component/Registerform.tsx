@@ -20,7 +20,8 @@ function Registerform() {
             try {
                 const url = "/api/auth/Register";
                 const response = await axios.post(url, payload)
-                const responsepayload = response.data.Registereduser
+                console.log("Register Response",response);
+                const responsepayload = response.data
                 if (responsepayload.status == 200) {
                     Swal.fire({
                         title: `${responsepayload.message}`,

@@ -1,13 +1,15 @@
 import DBConnection from "@/app/lib/db/dbconnection";
 import { RejectExpense } from "@/app/lib/controller/ApprovalManagement";
-export async function POST(request:Request,{params}:any){
+import { NextRequest, NextResponse } from "next/server";
+
+export async function POST(request:NextRequest,{params}:any){
     try{
         await DBConnection();
         const expenseid = await params.id
         const RejectedExpRes = await RejectExpense(request,expenseid);
-        return new Response(JSON.stringify(RejectedExpRes),{status:RejectedExpRes.status})
+        return NextResponse.json(JSON.stringify(RejectedExpRes),{status:RejectedExpRes.status ?? 500})
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error:message}),{status:500})
+        return NextResponse.json(JSON.stringify({error:message}),{status:500})
     }
 }

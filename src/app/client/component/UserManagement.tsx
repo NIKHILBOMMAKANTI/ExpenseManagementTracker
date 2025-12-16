@@ -19,11 +19,6 @@ export function UserManagement() {
     const [userUpdate,setUserUpdate] = useState(false);
    const [isLoading, setIsLoading] = useState(true);
 
-    
-    
-
-
-    
  const GetData = async () => {
             try{
             const url = "/api/users";
@@ -34,7 +29,8 @@ export function UserManagement() {
                         Authorization: `Bearer ${Token}`
                     }
                 });
-                setData(response?.data?.UsersData?.data);
+                console.log("FULL RESPONSE:", response?.data?.data);
+                setData(response?.data?.data);
             }
         }catch(error:unknown){
             const message = (error instanceof Error)?(error?.message):("Something Went Wrong")

@@ -1,38 +1,50 @@
 import DBConnection from "@/app/lib/db/dbconnection"
 import { getSpecificExpense,deleteExpense,UpdateExpense } from "@/app/lib/controller/ExpenseManagement";
-export async function GET(request:Request,{params}:any){
-    try{
-        await DBConnection();
-        const expenseid = await params.id
-        const SpecificExpense = await getSpecificExpense(expenseid)
-        return new Response(JSON.stringify(SpecificExpense),{status:SpecificExpense.status})
-    }catch(error:unknown){
-        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error:message}),{status:500})
+import { NextRequest, NextResponse } from "next/server";
+
+interface RouteContext{
+    params:{
+        id:string
     }
 }
 
-export async function DELETE(request:Request,{params}:any){
+export async function GET(request:NextRequest,{params}:any){
+    try{
+        console.log("params",params);
+        await DBConnection();
+        const expenseid = await params.id
+        console.log(expenseid);
+        // console.log("Expense",expenseid);
+        const SpecificExpense = await getSpecificExpense(expenseid)
+        console.log("SpecificExpense" , SpecificExpense);
+        return NextResponse.json(SpecificExpense,{status:SpecificExpense.status ?? 500})
+    }catch(error:unknown){
+        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+        return NextResponse.json({error:message},{status:500})
+    }
+}
+
+export async function DELETE(request:NextRequest,{params}:any){
     try{
         await DBConnection();
         const expenseid = await params.id
         const DeltedExpense = await deleteExpense(request,expenseid);
-        return new Response(JSON.stringify(DeltedExpense),{status:DeltedExpense.status})
+        return NextResponse.json(DeltedExpense,{status:DeltedExpense.status ?? 500});
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error:message}),{status:500})
+        return NextResponse.json({error:message},{status:500})
     }
 }
 
-export async function PUT(request:Request,{params}:any){
+export async function PUT(request:NextRequest,{params}:any){
     try{
         await DBConnection();
         const expenseid = await params.id
         const UpdatedExpenseData = await UpdateExpense(request,expenseid);
-        return new Response(JSON.stringify(UpdatedExpenseData),{status:UpdatedExpenseData.status})
+        return NextResponse.json(UpdatedExpenseData,{status:UpdatedExpenseData.status ?? 500})
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error:message}),{status:500})
+        return NextResponse.json({error:message},{status:500})
     }
 }
 

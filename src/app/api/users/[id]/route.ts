@@ -1,46 +1,47 @@
 import DBConnection from "@/app/lib/db/dbconnection";
 import { getSpecificUser,deleteUser,updateUser } from "@/app/lib/controller/UserManagement";
+import { NextRequest, NextResponse } from "next/server";
 
 
-export async function GET(request:Request,{params}:any){
+export async function GET(request:NextRequest,{params}:any){
     try{
         await DBConnection();
         const userid = await params.id;
         if(!userid){
-            return {error:true,status:400,message:"User ID is required."}
+            return NextResponse.json({error:true,status:400,message:"User ID is required."})
         }
         const SpecificUserData = await getSpecificUser(request,userid);
-        return new Response(JSON.stringify({SpecificUserData}),{status:SpecificUserData.status})
+        return NextResponse.json({SpecificUserData},{status:SpecificUserData.status ?? 500})
 
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error: message}),{status:500})
+        return NextResponse.json({error: message},{status:500})
     }
 }
 
-export async function DELETE(request:Request,{params}:any){
+export async function DELETE(request:NextRequest,{params}:any){
     try{
         await DBConnection();
         const userid = await params.id
         if(!userid){
-            return {error:true,status:400,message:"User ID is required."}
+            return NextResponse.json({error:true,status:400,message:"User ID is required."});
         }
         const deletedUser = await deleteUser(request,userid);
-        return new Response(JSON.stringify({deletedUser}),{status:deletedUser.status})
+        return NextResponse.json(JSON.stringify({deletedUser}),{status:deletedUser.status ?? 500})
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error:message}),{status:500})
+        return NextResponse.json(JSON.stringify({error:message}),{status:500})
     }
 }
 
-export async function PUT(request:Request,{params}:any){
+export async function PUT(request:NextRequest,{params}:any){
     try{
         await DBConnection();
         const userid = await params.id
         const updatedUserData = await updateUser(request,userid);
-        return new Response(JSON.stringify({updatedUserData}),{status:updatedUserData.status})
+        return NextResponse.json({updatedUserData},{status:updatedUserData.status ?? 500})
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error:message}),{status:500})
+        return NextResponse.json({error:message},{status:500})
     }
 }

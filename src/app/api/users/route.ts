@@ -1,16 +1,17 @@
 import DBConnection from "../../lib/db/dbconnection";
 import { getAllUsers,addUser } from "../../lib/controller/UserManagement"
+import { NextRequest, NextResponse } from "next/server";
 
 
 
-export async function GET(request:Request,response:Response){
+export async function GET(request:NextRequest){
     try{
         await DBConnection();
         const UsersData = await getAllUsers(request);
-        return new Response(JSON.stringify({UsersData}),{status:UsersData.status})
+        return NextResponse.json(UsersData,{status:UsersData.status ?? 500})
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error:message}),{status:500})
+        return NextResponse.json({error:message},{status:500})
     }
 }
 
@@ -18,10 +19,10 @@ export async function POST(request:Request){
     try{
         await DBConnection();
         const newUser = await addUser(request);
-        return new Response(JSON.stringify(newUser),{status:newUser.status})
+        return NextResponse.json(newUser,{status:newUser.status ?? 500})
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error:message}),{status:500})
+        return NextResponse.json({error:message},{status:500})
     }
 }
 

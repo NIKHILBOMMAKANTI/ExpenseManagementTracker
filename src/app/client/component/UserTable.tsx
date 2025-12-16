@@ -1,5 +1,5 @@
 'use client';
-import { useContext, useState, useRef } from "react";
+import { useContext, useState, useRef,useEffect } from "react";
 import { Stack, Box, Table, Text, Button, Dialog, Card, Field, Input, Portal, Skeleton } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa6";
 import { PageContext } from "../context/PageProvider";
@@ -22,17 +22,15 @@ export function UserTable({ data, heading, buttontxt, handleUserDelete, setUserU
     const { page, setPage } = useContext(PageContext)!;
     const FormData = useRef<FormType>({});
 
-
-
     const Headers = (data?.length > 0) ? Object.keys(data[0]) : [];
     Headers.unshift("S.No");
     Headers.push("Actions");
+    console.log("Headers",Headers)
 
     const handleEdit = (Data: any) => {
         setSelectedUser(Data);
         setisOpen(true);
     }
-
     const handleUserUpdate = async (e: React.MouseEvent<HTMLButtonElement>) => {
         try {
             const userPayload = {
@@ -73,6 +71,7 @@ export function UserTable({ data, heading, buttontxt, handleUserDelete, setUserU
             console.log(error);
         }
     }
+console.log("UserData",data);
     return (
         <>
             <Stack background="#EDEDED" padding="0.4rem">

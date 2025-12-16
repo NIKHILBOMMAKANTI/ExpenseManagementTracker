@@ -1,12 +1,14 @@
 import DBConnection from "@/app/lib/db/dbconnection";
 import { getSpendingByCategory } from "@/app/lib/controller/ApprovalManagement";
-export async function GET(request:Request){
+import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(request:NextRequest){
     try{
         await DBConnection();
         const getSpendingByCategoryData = await getSpendingByCategory(request)
-        return new Response(JSON.stringify(getSpendingByCategoryData), { status: getSpendingByCategoryData.status })
+        return NextResponse.json(getSpendingByCategoryData, { status: getSpendingByCategoryData.status ?? 500})
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({ error: message }), { status: 500 })
+        return NextResponse.json({ error: message }, { status: 500 })
     }
 }

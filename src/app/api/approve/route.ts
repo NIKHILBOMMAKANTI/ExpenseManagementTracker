@@ -1,13 +1,14 @@
 import DBConnection from "../../lib/db/dbconnection"
 import { getApprovedExpenses } from "../../lib/controller/ApprovalManagement"
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request:Request){
+export async function GET(request:NextRequest){
     try{
         await DBConnection();
         const ApprovedExpRes = await getApprovedExpenses(request);
-        return new Response(JSON.stringify(ApprovedExpRes),{status:ApprovedExpRes.status})
+        return NextResponse.json(ApprovedExpRes,{status:ApprovedExpRes.status ?? 500})
     }catch(error:unknown){
         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        return new Response(JSON.stringify({error:message}),{status:500})
+        return NextResponse.json({error:message},{status:500})
     }
 }
