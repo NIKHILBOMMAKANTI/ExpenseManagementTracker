@@ -3,6 +3,8 @@ import { getSpecificExpense } from './ExpenseManagement';
 import { getPendingExpenses } from './ApprovalManagement';
 import { getDashboardSummary } from './ApprovalManagement';
 import { schedule } from 'node-cron';
+import { NextRequest, NextResponse } from "next/server";
+
 export const sendNotification = async (expenseid: string) => {
     try {
 
@@ -34,61 +36,65 @@ export const sendNotification = async (expenseid: string) => {
     }
 }
 
-export const WeeklySummary = async () => {
-    const DashboardSummary = await getDashboardSummary();
-    const PendingExpenses = await getPendingExpenses();
+// export const WeeklySummary = async (req: NextRequest) => {
+//     const DashboardSummary = await getDashboardSummary(req);
+//     const PendingExpenses = await getPendingExpenses(req);
+//     console.log("PendingExpenses",PendingExpenses);
+//     const PendingRows = PendingExpenses?.data?.map((PenExp)=>{
+//       return(
+//         `<tr>
+//             <td>${PenExp?.title}</td>
+//             <td>${PenExp?.amount}</td>
+//             <td>${PenExp?.status}</td>
+//         </tr>`);
+//     }).join('');
+//     await Transport.sendMail({
+//         from: 'nikhilbommakanti2001@gmail.com',
+//         to: 'nikhilbommakanti2001@gmail.com',
+//         subject: 'Weekly Report from Expense Management Tracker',
+//         html: `
+//         <p>Hello Admin,</p>
+//         <p>Here’s your weekly project approval summary:</p></br>
+//         <p>Approved Projects:<span>${DashboardSummary?.data["Approved Count"]}</span></p>
+//         <p>Rejected Projects:<span>${DashboardSummary?.data["Rejected Count"]}</span></p>
+//         <p>Pending Projects:<span>${DashboardSummary?.data["Pending Count"]}</span></p></br>
+//         <p>Below are the details of your pending projects:</p>
+//         <table>
+//         <tr>
+//         <th>Title</th>
+//         <th>Amount</th>
+//         <th>Status</th>
+//         </tr>
+//             ${PendingRows}
+//         </table>
+//         `
+//     })
+// }
 
-    const PendingRows = PendingExpenses?.data?.map((PenExp)=>{
-      return(
-        `<tr>
-            <td>${PenExp.title}</td>
-            <td>${PenExp.amount}</td>
-            <td>${PenExp.status}</td>
-        </tr>`);
-    }).join('');
-    await Transport.sendMail({
-        from: 'nikhilbommakanti2001@gmail.com',
-        to: 'nikhilbommakanti2001@gmail.com',
-        subject: 'Weekly Report from Expense Management Tracker',
-        html: `
-        <p>Hello Admin,</p>
-        <p>Here’s your weekly project approval summary:</p></br>
-        <p>Approved Projects:<span>${DashboardSummary?.data["Approved Count"]}</span></p>
-        <p>Rejected Projects:<span>${DashboardSummary?.data["Rejected Count"]}</span></p>
-        <p>Pending Projects:<span>${DashboardSummary?.data["Pending Count"]}</span></p></br>
-        <p>Below are the details of your pending projects:</p>
-        <table>
-        <tr>
-        <th>Title</th>
-        <th>Amount</th>
-        <th>Status</th>
-        </tr>
-            ${PendingRows}
-        </table>
-        `
-    })
-}
+// const scheduleCron = async(req:NextRequest)=>{
+//     try{
+//         await WeeklySummary(req);
+//     }catch(error:unknown){
+//         const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
+//         await Transport.sendMail({
+//             from: 'nikhilbommakanti2001@gmail.com',
+//             to: 'nikhilbommakanti2001@gmail.com',
+//             subject:'Dashboard Summary Delivery Failed',
+//             html:`
+//             <p>Hello Team,</p></br>
+//             <p>This is to inform you that the automated delivery of the Dashboard Summary email has failed.</p>
+//             <p>Please check the system logs and take necessary action to resolve the issue.</p></br>
 
-schedule('0 12 * * 1',async ()=>{
-    try{
-        await WeeklySummary();
-    }catch(error:unknown){
-        const message = (error instanceof Error)?(error?.message):("Something Went Wrong")
-        await Transport.sendMail({
-            from: 'nikhilbommakanti2001@gmail.com',
-            to: 'nikhilbommakanti2001@gmail.com',
-            subject:'Dashboard Summary Delivery Failed',
-            html:`
-            <p>Hello Team,</p></br>
-            <p>This is to inform you that the automated delivery of the Dashboard Summary email has failed.</p>
-            <p>Please check the system logs and take necessary action to resolve the issue.</p></br>
+//             <p>Failed Details</p>
+//             <p>Error Message:<span>${message}</span></p></br>
 
-            <p>Failed Details</p>
-            <p>Error Message:<span>${message}</span></p></br>
+//             <p>Regards</p>
+//             <p>Nikhil Bommakanti</p>
+//             `
+//         })
+//     }
+// }
 
-            <p>Regards</p>
-            <p>Nikhil Bommakanti</p>
-            `
-        })
-    }
-})
+// schedule('0 12 * * 1',async ()=>{
+//     awaitscheduleCron()
+// })
