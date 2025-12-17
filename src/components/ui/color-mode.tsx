@@ -12,6 +12,16 @@ export type ColorModeProviderProps = ThemeProviderProps
 
 
 export function ColorModeProvider(props: ColorModeProviderProps) {
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    return null
+  }
+
   return (
     <ThemeProvider attribute="class" disableTransitionOnChange {...props} />
   )
