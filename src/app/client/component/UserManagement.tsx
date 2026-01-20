@@ -14,10 +14,12 @@ interface FormType {
 }
 
 export function UserManagement() {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState<any[]>([]);
     const [delUser, setDelUser] = useState([]);
     const [userUpdate,setUserUpdate] = useState(false);
    const [isLoading, setIsLoading] = useState(true);
+
+
 
  const GetData = async () => {
             try{

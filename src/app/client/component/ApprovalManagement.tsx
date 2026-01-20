@@ -66,7 +66,7 @@ export function ApprovalManagement() {
     }, [])
     return (
         <>
-            <Stack background="#EDEDED" padding="0.4rem">
+            <Stack background="#EDEDED" padding="0.4rem" lineHeight="48px">
                 <Text color="#878787">Home/Approval Mangement</Text>
             </Stack>
             <ApprovalDashboard data={dashboarddata}  isLoading={isLoading}/>

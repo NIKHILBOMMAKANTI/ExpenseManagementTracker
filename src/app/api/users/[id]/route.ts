@@ -22,7 +22,9 @@ export async function GET(request:NextRequest,{params}:any){
 export async function DELETE(request:NextRequest,{params}:any){
     try{
         await DBConnection();
-        const userid = await params.id
+        const {id} = await params;
+        const userid = id;
+        //const userid = await params.id
         if(!userid){
             return NextResponse.json({error:true,status:400,message:"User ID is required."});
         }
@@ -37,7 +39,9 @@ export async function DELETE(request:NextRequest,{params}:any){
 export async function PUT(request:NextRequest,{params}:any){
     try{
         await DBConnection();
-        const userid = await params.id
+        const {id} = await params;
+        const userid = id;
+        // const userid = await params.id
         const updatedUserData = await updateUser(request,userid);
         return NextResponse.json({updatedUserData},{status:updatedUserData.status ?? 500})
     }catch(error:unknown){

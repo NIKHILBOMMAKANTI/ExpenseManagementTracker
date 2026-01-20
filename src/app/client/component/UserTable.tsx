@@ -83,7 +83,7 @@ export function UserTable({ data, heading, buttontxt, handleUserDelete, setUserU
     console.log("UserData", data);
     return (
         <>
-            <Stack background="#EDEDED" padding="0.4rem">
+            <Stack background="#EDEDED" padding="0.4rem" lineHeight="48px">
                 <Text color="#878787">Home/{heading}</Text>
             </Stack>
             <Stack padding="1rem" width="95%" background="#EDEDED" borderRadius="15px" margin="auto">

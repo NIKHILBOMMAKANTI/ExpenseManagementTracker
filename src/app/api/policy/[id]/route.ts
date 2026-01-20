@@ -6,7 +6,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request:NextRequest,{params}:any){
     try{
         await DBConnection();
-        const policyid = await params?.id;
+        const {id} = await params;
+        const policyid = id;
+        // const policyid = await params?.id;
         const PolicyData = await getSpecificPolicy(request,policyid);
         return NextResponse.json(PolicyData,{status:PolicyData.status ?? 500})
     }catch(error:unknown){
@@ -18,7 +20,9 @@ export async function GET(request:NextRequest,{params}:any){
 export async function DELETE(request:NextRequest,{params}:any){
     try{
         await DBConnection();
-        const policyid = await params?.id;
+        const {id} = await params;
+        const policyid = id;
+        // const policyid = await params?.id;
         const DeletedPolicy = await deletePolicy(request,policyid);
         return NextResponse.json(DeletedPolicy,{status:DeletedPolicy.status ?? 500})
 
@@ -31,7 +35,10 @@ export async function DELETE(request:NextRequest,{params}:any){
 export async function PUT(request:NextRequest,{params}:any){
     try{
         await DBConnection();
-        const policyid = await params?.id;
+        const {id} = await params;
+        const policyid = id;
+        console.log("policyid",policyid);
+        // const policyid = await params?.id;
         const UpdatedPolicy = await updatePolicy(request,policyid);
         return NextResponse.json(UpdatedPolicy,{status:UpdatedPolicy.status ?? 500})
     }catch(error:unknown){

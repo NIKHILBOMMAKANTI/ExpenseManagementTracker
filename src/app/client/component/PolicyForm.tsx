@@ -1,7 +1,7 @@
 import { Button, Card, Field, Input, Stack, NativeSelect, Textarea } from "@chakra-ui/react";
 import { useRef } from "react";
 import Swal from "sweetalert2";
-import { useContext } from "react";
+import { useContext,useState } from "react";
 import { PageContext } from "../context/PageProvider";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from "axios";
@@ -16,10 +16,13 @@ interface FormType {
 }
 export function PolicyForm() {
     const {page, setPage} = useContext(PageContext)!;
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const FormData = useRef<FormType>({});
     const handleSubmit = async(e: React.FormEvent) => {
         try {
             e.preventDefault();
+            setIsSubmitting(true);
             const policyPayload = {
                 name: FormData.current.name?.value,
                 description: FormData.current.description?.value,
@@ -65,7 +68,9 @@ export function PolicyForm() {
                         secondary: '#FFFAEE',
                     },
                 });
-    }
+    }finally{
+            setIsSubmitting(false);
+        }
 }
 return (
     <>
@@ -119,7 +124,7 @@ return (
                     </Stack>
                 </Stack>
                 <Stack justifyContent="center" alignItems="center" paddingTop="1rem">
-                    <Button type="submit" background="#37629F" width={{ base: "100%", md: "20%" }} borderRadius="5px">Create Policy</Button>
+                    <Button type="submit" background="#37629F" width={{ base: "100%", md: "20%" }} borderRadius="5px" loading={isSubmitting} loadingText="Creating Policy...">Create Policy</Button>
                 </Stack>
             </Card.Body>
         </Card.Root>

@@ -60,15 +60,15 @@ export function AdminContent() {
     return (
         <Flex flexDirection="row" justifyContent="center" minHeight="100vh">
             <Box flex="2" display={{ base: "none", sm: "block" }} background="#C3E0F8"   >
-                <Stack direction="row" alignItems="center" gap="4" padding="0.8rem" borderBottom="1px solid #8BB5E3" background={(page === 'dashboard')?('#ffffff'):('#C3E0F8')} onClick={() => { setPage("dashboard") }}>
-                    <Box>
+                <Stack direction="row" alignItems="center" gap="4" padding="0.8rem" borderBottom="1px solid #8BB5E3" cursor="pointer" background={(page === 'dashboard')?('#ffffff'):('#C3E0F8')} onClick={() => { setPage("dashboard") }}>
+                    <Box >
                         <Image width="34px" height="34px" src="/Dashboard.png" />
                     </Box>
                     <Box>
                         <Text color="#265C94">Dashboard</Text>
                     </Box>
                 </Stack>
-                <Stack direction="row" alignItems="center" gap="4" padding="0.6rem" borderBottom="1px solid #8BB5E3" background={(page === 'expense' || page === 'expenseoverview' || page == 'expensecreation')?('#ffffff'):('#C3E0F8')} onClick={() => { setPage("expense") }}>
+                <Stack direction="row" alignItems="center" gap="4" padding="0.6rem" borderBottom="1px solid #8BB5E3" cursor="pointer" background={(page === 'expense' || page === 'expenseoverview' || page == 'expensecreation')?('#ffffff'):('#C3E0F8')} onClick={() => { setPage("expense") }}>
                     <Box>
                         <Image width="34px" height="34px" src="/Expense.png" />
                     </Box>
@@ -76,7 +76,7 @@ export function AdminContent() {
                         <Text color="#265C94">Expense Management</Text>
                     </Box>
                 </Stack>
-                <Stack direction="row" alignItems="center" gap="4" padding="0.6rem" borderBottom="1px solid #8BB5E3" background={(page === 'user')?('#ffffff'):('#C3E0F8')} onClick={() => { setPage("user") }}>
+                <Stack direction="row" alignItems="center" gap="4" padding="0.6rem" borderBottom="1px solid #8BB5E3" cursor="pointer" background={(page === 'user')?('#ffffff'):('#C3E0F8')} onClick={() => { setPage("user") }}>
                     <Box>
                         <Image width="34px" height="34px" src="/User.png" />
                     </Box>
@@ -84,7 +84,7 @@ export function AdminContent() {
                         <Text color="#265C94">User Management</Text>
                     </Box>
                 </Stack>
-                <Stack direction="row" alignItems="center" gap="4" padding="0.6rem" borderBottom="1px solid #8BB5E3" background={(page === 'policy')?('#ffffff'):('#C3E0F8')} onClick={() => { setPage("policy") }}>
+                <Stack direction="row" alignItems="center" gap="4" padding="0.6rem" borderBottom="1px solid #8BB5E3" cursor="pointer" background={(page === 'policy')?('#ffffff'):('#C3E0F8')} onClick={() => { setPage("policy") }}>
                     <Box>
                         <Image width="34px" height="34px" src="/Policy.png" />
                     </Box>
@@ -92,7 +92,7 @@ export function AdminContent() {
                         <Text color="#265C94">Policy Management</Text>
                     </Box>
                 </Stack>
-                <Stack direction="row" alignItems="center" gap="4" padding="0.6rem" borderBottom="1px solid #8BB5E3" background={(page === 'approval')?('#ffffff'):('#C3E0F8')} onClick={() => { setPage("approval") }}>
+                <Stack direction="row" alignItems="center" gap="4" padding="0.6rem" borderBottom="1px solid #8BB5E3" cursor="pointer" background={(page === 'approval')?('#ffffff'):('#C3E0F8')} onClick={() => { setPage("approval") }}>
                     <Box>
                         <Image width="34px" height="34px" src="/Approval.png" />
                     </Box>
@@ -100,7 +100,7 @@ export function AdminContent() {
                         <Text color="#265C94">Approval Management</Text>
                     </Box>
                 </Stack>
-                <Stack direction="row" alignItems="center" gap="4" padding="0.6rem" borderBottom="1px solid #8BB5E3" onClick={(e)=>{e.currentTarget.style.background = '#ffffff'; handleLogout()}}>
+                <Stack direction="row" alignItems="center" gap="4" padding="0.6rem" borderBottom="1px solid #8BB5E3" cursor="pointer" onClick={(e)=>{e.currentTarget.style.background = '#ffffff'; handleLogout()}}>
                     <Box>
                         <Image width="34px" height="34px" src="/Logout.png" />
                     </Box>

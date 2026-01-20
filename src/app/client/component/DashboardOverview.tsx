@@ -33,21 +33,21 @@ export function DashboardOverview() {
     return (
         <>
 
-            <Stack background="#EDEDED" padding="0.4rem">
+            <Stack background="#EDEDED" padding="0.4rem" lineHeight="48px">
                 <Text color="#878787">Home/Dashboard</Text>
             </Stack>
-            <Stack gap="4">
+            <Stack gap="4" style={{marginLeft: "2%"}}>
                 <Stack gap="4" direction={{ base: "column", md: "row" }} justifyContent="space-around">
-                    <Stack background="#EDEDED" borderRadius="15px" w={{ base: "90%", md: "45%" }} mx="auto">
+                    <Stack background="#EDEDED" borderRadius="15px" w={{ base: "90%" }} mx="auto">
                         <Text padding="1rem" color="#39619D" fontWeight="700">Expenses Overview</Text>
                         <PieChart />
                     </Stack>
-                    <Stack background="#EDEDED" borderRadius="15px" w={{ base: "90%", md: "45%" }} mx="auto">
+                    <Stack background="#EDEDED" borderRadius="15px" w={{ base: "90%" }} mx="auto">
                         <Text padding="1rem" color="#39619D" fontWeight="700">Spending By Category</Text>
                         <DonutChart />
                     </Stack>
                 </Stack>
-                <Stack background="#EDEDED" borderRadius="15px" w={{ base: "90%", md: "95%" }} mx="auto">
+                <Stack background="#EDEDED" borderRadius="15px" w={{ base: "90%", md: "100%" }} mx="auto">
                     <Text padding="1rem" color="#39619D" fontWeight="700">Pending Expenses</Text>
                     <TableOfContent pendingData={pendingData} isLoading={isLoading}/>
                 </Stack>

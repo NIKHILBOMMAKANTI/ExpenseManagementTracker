@@ -30,7 +30,7 @@ export function Header() {
             <Box background="linear-gradient(90deg, #629BD9 0%, #C6D8EC 100%)" >
                 <Flex alignItems="center" justifyContent="space-between">
                     <Box>
-                        <Image width="171px" height="39px" margin="0.3rem" src="/Logo.png" />
+                        <Image width="171px" height="39px" margin="0.3rem" src="/Logo.png" m="10px 15px" />
                     </Box>
                     <Box margin="1rem" display={{base:"block",md:"none"}}>
                         <FaBars color='#39619F' size="34px" onClick={()=>{setOpen(true)}} />

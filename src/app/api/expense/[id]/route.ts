@@ -12,9 +12,9 @@ export async function GET(request:NextRequest,{params}:any){
     try{
         console.log("params",params);
         await DBConnection();
-        const expenseid = await params.id
+        const {id} = await params;
+        const expenseid = id;
         console.log(expenseid);
-        // console.log("Expense",expenseid);
         const SpecificExpense = await getSpecificExpense(expenseid)
         console.log("SpecificExpense" , SpecificExpense);
         return NextResponse.json(SpecificExpense,{status:SpecificExpense.status ?? 500})
@@ -27,7 +27,9 @@ export async function GET(request:NextRequest,{params}:any){
 export async function DELETE(request:NextRequest,{params}:any){
     try{
         await DBConnection();
-        const expenseid = await params.id
+        const {id} = await params;
+        const expenseid = id;
+        // const expenseid = await params.id
         const DeltedExpense = await deleteExpense(request,expenseid);
         return NextResponse.json(DeltedExpense,{status:DeltedExpense.status ?? 500});
     }catch(error:unknown){

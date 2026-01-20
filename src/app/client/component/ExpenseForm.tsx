@@ -1,7 +1,7 @@
 import { Button, Card, Field, Input, Stack, NativeSelect, Textarea, Box, Icon, FileUpload, Image } from "@chakra-ui/react";
 import { LuUpload } from "react-icons/lu"
 import axios from "axios";
-import { useRef,useContext } from "react";
+import { useRef,useContext,useState } from "react";
 import { title } from "process";
 import toast, { Toaster } from 'react-hot-toast';
 import { PageContext } from "../context/PageProvider";
@@ -16,6 +16,7 @@ interface ExpenseFormDataProp {
 export function ExpenseForm() {
     const ExpenseFormData = useRef<ExpenseFormDataProp>({});
         const { page, setPage } = useContext(PageContext)!;
+        const [isSubmitting, setIsSubmitting] = useState(false);
     
     const handleCreateExpense = async () => {
         try {
@@ -80,6 +81,8 @@ export function ExpenseForm() {
                         secondary: '#FFFAEE',
                     },
                 });
+        }finally{
+            setIsSubmitting(false);
         }
        
 
@@ -148,7 +151,7 @@ export function ExpenseForm() {
                         </Stack>
 
                         <Stack justifyContent="center" alignItems="center" paddingTop="1rem">
-                            <Button background="#37629F" width={{ base: "100%", md: "20%" }} borderRadius="5px" onClick={() => { handleCreateExpense() }}>Create Expense</Button>
+                            <Button loading={isSubmitting} loadingText="Creating Expense..." background="#37629F" width={{ base: "100%", md: "20%" }} borderRadius="5px"  onClick={() => { setIsSubmitting(true); handleCreateExpense(); }}>Create Expense</Button>
                         </Stack>
                     </Card.Body>
                 </Card.Root>

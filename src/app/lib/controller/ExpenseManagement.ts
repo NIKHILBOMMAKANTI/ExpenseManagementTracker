@@ -131,7 +131,9 @@ export const getAllExpenses = async () => {
 
 
 export const getSpecificExpense = async (expenseid: string) => {
+    console.log("Expenseid", expenseid);
     const SpecificExpense = await expense.findOne({ _id: expenseid }).populate('userid').populate('approverid');
+    console.log("SpecificExpense",SpecificExpense);
     if (!SpecificExpense) {
         return { error: true, status: 404, message: "Expense Not Found" }
     }

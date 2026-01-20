@@ -1,6 +1,6 @@
 'use client'
 import { Button, Card, Field, Input, Stack } from "@chakra-ui/react";
-import { useRef,useContext } from "react";
+import { useRef,useContext,useState } from "react";
 import { PageContext } from "../context/PageProvider";
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
@@ -13,10 +13,12 @@ interface FormType {
 }
 export function UserForm() {
     const {page, setPage} = useContext(PageContext)!;
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const FormData = useRef<FormType>({});
     const handleSubmit = async (e: React.FormEvent) => {
         try {
             e.preventDefault();
+            setIsSubmitting(true)
             const userPayload = {
                 firstname: FormData.current.firstanme?.value,
                 lastname: FormData.current.lastname?.value,
@@ -61,6 +63,8 @@ export function UserForm() {
                         secondary: '#FFFAEE',
                     },
                 });
+        }finally{
+            setIsSubmitting(false);
         }
     }
 
@@ -94,7 +98,7 @@ export function UserForm() {
                         </Stack>
                     </Stack>
                     <Stack justifyContent="center" alignItems="center" paddingTop="1rem">
-                        <Button type="submit" background="#37629F" width={{ base: "100%", md: "20%" }} borderRadius="5px">Create User</Button>
+                        <Button type="submit" background="#37629F" width={{ base: "100%", md: "20%" }} borderRadius="5px" loading={isSubmitting} loadingText="Creating User..." >Create User</Button>
                     </Stack>
                 </Card.Body>
             </Card.Root>
