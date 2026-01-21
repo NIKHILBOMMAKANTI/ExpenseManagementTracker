@@ -5,6 +5,7 @@ import { useRef,useContext,useState } from "react";
 import { title } from "process";
 import toast, { Toaster } from 'react-hot-toast';
 import { PageContext } from "../context/PageProvider";
+import { useRouter } from "next/navigation";
 
 interface ExpenseFormDataProp {
     title?: HTMLInputElement | null,
@@ -17,6 +18,7 @@ export function ExpenseForm() {
     const ExpenseFormData = useRef<ExpenseFormDataProp>({});
         const { page, setPage } = useContext(PageContext)!;
         const [isSubmitting, setIsSubmitting] = useState(false);
+        const route = useRouter();
     
     const handleCreateExpense = async () => {
         try {
@@ -64,7 +66,8 @@ export function ExpenseForm() {
                         secondary: '#FFFAEE',
                     },
                 });
-                setTimeout(()=>{setPage('expense')},2100)
+                setTimeout(()=>{setPage('expense'),route.push('/client/pages/admindashboard/expense')},2100)
+
                 
             }
 

@@ -37,7 +37,6 @@ export async function PUT(request:NextRequest,{params}:any){
         await DBConnection();
         const {id} = await params;
         const policyid = id;
-        console.log("policyid",policyid);
         // const policyid = await params?.id;
         const UpdatedPolicy = await updatePolicy(request,policyid);
         return NextResponse.json(UpdatedPolicy,{status:UpdatedPolicy.status ?? 500})

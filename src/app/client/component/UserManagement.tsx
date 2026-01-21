@@ -53,8 +53,9 @@ export function UserManagement() {
                         Authorization: `Bearer ${Token}`
                     }
                 });
-                const responsepayload = response?.data?.deletedUser
-                toast.success(`${responsepayload?.message}`, {
+                const responsepayload = response?.data;
+                const parsedresponse = JSON.parse(responsepayload)
+                toast.success(`${parsedresponse?.deletedUser?.message}`, {
                     style: {
                         border: '1px solid #E53E3E',
                         padding: '16px',

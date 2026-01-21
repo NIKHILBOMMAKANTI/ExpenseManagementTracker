@@ -5,6 +5,7 @@ import { useContext,useState } from "react";
 import { PageContext } from "../context/PageProvider";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface FormType {
     name?: HTMLInputElement | null,
@@ -17,6 +18,7 @@ interface FormType {
 export function PolicyForm() {
     const {page, setPage} = useContext(PageContext)!;
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const route = useRouter();
 
     const FormData = useRef<FormType>({});
     const handleSubmit = async(e: React.FormEvent) => {
@@ -52,7 +54,7 @@ export function PolicyForm() {
                         secondary: '#FFFAEE',
                     },
                 });
-                setTimeout(() => setPage('policy'), 2000);
+                setTimeout(()=>{ setPage('policy'); route.push('/client/pages/admindashboard/policy')},2000)
             }
 
         }catch (error: any) {

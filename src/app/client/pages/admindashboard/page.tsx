@@ -1,13 +1,5 @@
-import { Flex, Box} from "@chakra-ui/react";
-import { Header } from "../../component/layout/header";
-import { AdminContent } from "../../component/AdminContent";
+import { DashboardOverview } from "../../component/DashboardOverview";
 
-export default function AdminDashboard() {
-    
-    return (
-        <>
-            <Header />
-            <AdminContent/>
-        </>
-    )
+export default function Dashboard(){
+    return <DashboardOverview/>
 }

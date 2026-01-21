@@ -12,6 +12,7 @@ import { ImCross } from "react-icons/im";
 import axios from "axios";
 import Swal from "sweetalert2";
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from "next/navigation";
 
 
 
@@ -55,6 +56,7 @@ export function ExpenseOverview({ heading, buttontxt, expid }: ExpenseOverviewPr
     const [refetch, setrefetch] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const ExpenseFormData = useRef<ExpenseFormDataProp>({});
+    const route = useRouter();
 
     useEffect(() => {
         const GetData = async () => {
@@ -109,7 +111,8 @@ export function ExpenseOverview({ heading, buttontxt, expid }: ExpenseOverviewPr
                         secondary: '#FFFAEE',
                     },
                 });
-                setTimeout(() => setPage('expense'), 2100);
+                setTimeout(()=>{ setPage('expense'); route.push('/client/pages/admindashboard/expense')},2100)
+                
             }
 
         })
@@ -226,7 +229,7 @@ export function ExpenseOverview({ heading, buttontxt, expid }: ExpenseOverviewPr
                         <Text color="#39619D" fontWeight="700" fontSize="1.25rem">{heading}</Text>
                     </Box>
                     <Box>
-                        <Button background="#37629F" variant="solid" onClick={() => { setPage("expensecreation") }}>
+                        <Button background="#37629F" variant="solid" onClick={() => { setPage("expensecreation");  route.push('/client/pages/admindashboard/expense/expensecreation')}}>
                             <FaPlus /> {buttontxt}
                         </Button>
                     </Box>

@@ -34,7 +34,7 @@ export function ExpenseManagement({ setExpid }: ExpenseManagementProp) {
     return (
 
         <>
-            <ExpenseTable data={data} heading="Expense Mangement" buttontxt="Add Expense" setExpid={setExpid} isLoading={isLoading}/>
+            <ExpenseTable data={data} heading="Expense Mangement" buttontxt="Add Expense" setExpid={setExpid} isLoading={isLoading} />
         </>
     )
 }

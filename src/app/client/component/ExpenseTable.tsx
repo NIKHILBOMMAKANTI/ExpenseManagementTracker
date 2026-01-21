@@ -3,6 +3,10 @@ import { useContext, useEffect } from "react";
 import { PageContext } from "../context/PageProvider";
 import { FaPlus } from "react-icons/fa6";
 import { IoEyeOutline } from "react-icons/io5";
+import { useRouter } from "next/navigation";
+
+
+
 
 
 export function ExpenseTable({ data, heading, buttontxt, setExpid, isLoading }: any) {
@@ -11,12 +15,14 @@ export function ExpenseTable({ data, heading, buttontxt, setExpid, isLoading }: 
     Headers.unshift("S.No")
     Headers.push("View");
     const { page, setPage } = useContext(PageContext)!;
+    const route = useRouter();
 
 
     const handleView = (event: any) => {
         const expid = event.currentTarget.dataset.id;
         setExpid(expid);
-        setPage('expenseoverview')
+        setPage('expenseoverview');
+        route.push('/client/pages/admindashboard/expense/expenseoverview')
     }
 
     return (
@@ -31,7 +37,7 @@ export function ExpenseTable({ data, heading, buttontxt, setExpid, isLoading }: 
                         <Text padding="1rem" color="#39619D" fontWeight="700">{heading}</Text>
                     </Box>
                     <Box>
-                        <Button background="#37629F" variant="solid" onClick={() => { setPage("expensecreation") }}>
+                        <Button background="#37629F" variant="solid" onClick={() => { setPage("expensecreation"); route.push('/client/pages/admindashboard/expense/expensecreation')}}>
                             <FaPlus /> {buttontxt}
                         </Button>
                     </Box>

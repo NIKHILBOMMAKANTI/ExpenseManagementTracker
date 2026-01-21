@@ -41,7 +41,9 @@ export async function DELETE(request:NextRequest,{params}:any){
 export async function PUT(request:NextRequest,{params}:any){
     try{
         await DBConnection();
-        const expenseid = await params.id
+        const {id} = await params;
+        const expenseid = id;
+        // const expenseid = await params.id
         const UpdatedExpenseData = await UpdateExpense(request,expenseid);
         return NextResponse.json(UpdatedExpenseData,{status:UpdatedExpenseData.status ?? 500})
     }catch(error:unknown){

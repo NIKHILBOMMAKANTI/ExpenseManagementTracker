@@ -4,6 +4,8 @@ import { useRef,useContext,useState } from "react";
 import { PageContext } from "../context/PageProvider";
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from "next/navigation";
+
 
 interface FormType {
     firstanme?: HTMLInputElement | null,
@@ -15,6 +17,7 @@ export function UserForm() {
     const {page, setPage} = useContext(PageContext)!;
     const [isSubmitting, setIsSubmitting] = useState(false);
     const FormData = useRef<FormType>({});
+    const route = useRouter();
     const handleSubmit = async (e: React.FormEvent) => {
         try {
             e.preventDefault();
@@ -47,7 +50,7 @@ export function UserForm() {
                     },
                 });
 
-                setTimeout(() => setPage('user'), 2000);
+                setTimeout(()=>{ setPage('user'); route.push('/client/pages/admindashboard/user') },2000)
             }
 
         } catch (error: any) {

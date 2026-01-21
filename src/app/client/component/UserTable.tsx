@@ -6,6 +6,8 @@ import { PageContext } from "../context/PageProvider";
 import { ImCross } from "react-icons/im";
 import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from "next/navigation";
+
 
 interface FormType {
     firstname?: HTMLInputElement | null,
@@ -29,6 +31,7 @@ export function UserTable({ data, heading, buttontxt, handleUserDelete, setUserU
     const [isOpen, setisOpen] = useState(false);
     const { page, setPage } = useContext(PageContext)!;
     const FormData = useRef<FormType>({});
+    const route = useRouter();
 
     const Headers = (data?.length > 0) ? Object.keys(data[0]) : [];
     Headers.unshift("S.No");
@@ -92,7 +95,7 @@ export function UserTable({ data, heading, buttontxt, handleUserDelete, setUserU
                         <Text padding="1rem" color="#39619D" fontWeight="700">{heading}</Text>
                     </Box>
                     <Box>
-                        <Button background="#37629F" variant="solid" onClick={() => { setPage("usercreation") }}>
+                        <Button background="#37629F" variant="solid" onClick={() => { setPage("usercreation"); route.push('/client/pages/admindashboard/user/usercreation')}}>
                             <FaPlus /> {buttontxt}
                         </Button>
                     </Box>

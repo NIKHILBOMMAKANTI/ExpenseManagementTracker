@@ -5,6 +5,8 @@ import { useContext, useState, useRef } from "react";
 import { ImCross } from "react-icons/im";
 import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from "next/navigation";
+
 
 interface FormDataProp {
     name: HTMLInputElement | null,
@@ -27,6 +29,7 @@ export function PolicyTable({ data, heading, buttontxt, handlePolicyDelete, isLo
     const [isOpen, setisOpen] = useState(false);
     const [policydata, setPolicyData] = useState<PolicyDataProp>();
     const FormData = useRef<Partial<FormDataProp>>({});
+    const route = useRouter();
     const Headers = (data?.length > 0) ? Object.keys(data[0]) : [];
     Headers.unshift("S.No")
     Headers.push("Actions");
@@ -113,7 +116,7 @@ export function PolicyTable({ data, heading, buttontxt, handlePolicyDelete, isLo
                         <Text padding="1rem" color="#39619D" fontWeight="700">{heading}</Text>
                     </Box>
                     <Box>
-                        <Button background="#37629F" variant="solid" onClick={() => { setPage('policycreation') }}>
+                        <Button background="#37629F" variant="solid" onClick={() => { setPage('policycreation'); route.push('/client/pages/admindashboard/policy/policycreation')}}>
                             <FaPlus /> {buttontxt}
                         </Button>
                     </Box>
