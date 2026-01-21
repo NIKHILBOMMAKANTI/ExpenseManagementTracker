@@ -123,7 +123,7 @@ export function ExpenseForm() {
                                 <Stack gap="4" width="full" flexDirection={{ base: 'column', md: 'row' }} paddingTop="1rem">
                                     <Field.Root >
                                         <Field.Label fontSize="15px">Amount</Field.Label>
-                                        <Input border="1px solid #86A4C3" name="title" placeholder="Enter Your Firstname" ref={(el) => { ExpenseFormData.current.amount = el }} />
+                                        <Input border="1px solid #86A4C3" name="title" placeholder="Enter Expense Amount" ref={(el) => { ExpenseFormData.current.amount = el }} />
                                     </Field.Root>
                                     <Field.Root >
                                         <Field.Label fontSize="15px">Description</Field.Label>
