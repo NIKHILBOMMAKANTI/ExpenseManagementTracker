@@ -276,7 +276,7 @@ export function ExpenseOverview({ heading, buttontxt, expid }: ExpenseOverviewPr
                             <MdDelete />
                             Delete
                         </Button>
-                        <Button background="#39619D" variant="solid" onClick={() => { setPage('expense') }}>
+                        <Button background="#39619D" variant="solid" onClick={() => { setPage('expense'); route.push('/client/pages/admindashboard/expense')}}>
                             <FaArrowLeftLong />Back
                         </Button>
                     </HStack>
